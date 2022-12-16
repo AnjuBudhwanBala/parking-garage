@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
+    const [data, setData] = useState([]);
     const getData = () => {
         fetch("parking-garage.json", {
             headers: {
@@ -15,6 +16,7 @@ function App() {
             })
             .then(function (myJson) {
                 console.log(myJson);
+                setData(myJson);
             });
     };
     useEffect(() => {
