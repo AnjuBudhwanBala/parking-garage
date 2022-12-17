@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import ParkingSpots from "./ParkingSpots/ParkingSpots";
 import "./App.css";
 
 function App() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<any>([]);
     const getData = () => {
         fetch("parking-garage.json", {
             headers: {
@@ -11,11 +12,9 @@ function App() {
             },
         })
             .then(function (response) {
-                console.log(response);
                 return response.json();
             })
             .then(function (myJson) {
-                console.log(myJson);
                 setData(myJson);
             });
     };
@@ -25,7 +24,7 @@ function App() {
 
     return (
         <div className="App">
-            <div>Hi</div>
+            <ParkingSpots data={data.floors} />{" "}
         </div>
     );
 }
