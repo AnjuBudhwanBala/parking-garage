@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ParkingSpotType, ParkingSpot, Floor } from "../App";
 import "./Style.css";
 
 function ParkingSpots(props: any) {
@@ -11,12 +12,12 @@ function ParkingSpots(props: any) {
     useEffect(() => {
         let totalParkingSpotsOfGarage = 0;
         let totalAvailableParkingSpotsOfGarage = 0;
-        props.data &&
-            props.data.map((floor: any) => {
+        props.floorData &&
+            props.floorData.map((floor: Floor) => {
                 let floorAvailableParkingSpots = 0;
                 let floorOccupiedParkingSpots = 0;
                 floor.parkingSpots &&
-                    floor.parkingSpots.map((parkingSpot: any) => {
+                    floor.parkingSpots.map((parkingSpot: ParkingSpot) => {
                         totalParkingSpotsOfGarage += 1;
                         if (parkingSpot.occupied === false) {
                             totalAvailableParkingSpotsOfGarage += 1;
@@ -44,7 +45,7 @@ function ParkingSpots(props: any) {
                     },
                 ]);
             });
-    }, [props.data]);
+    }, [props.floorData]);
 
     return (
         <>
