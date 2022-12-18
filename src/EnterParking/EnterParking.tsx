@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ParkingSpotType, ParkingSpot, Floor } from "../App";
+import ParkingTicket from "../ParkingTicket";
 
 type IProps = {
     setParkingGarageData: any;
@@ -9,6 +10,9 @@ type IProps = {
 const EnterParking = (props: IProps) => {
     const [vehicleNumber, setVehicleNumber] = useState("");
     const [vehicleType, setVehicleType] = useState("compact");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isPrintTicket, setIsPrintTicket] = useState(false);
+    const [parkingDetails, setParkingDetails] = useState<any>();
 
     const handleVehicleNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
         setVehicleNumber(e.target.value);
@@ -20,8 +24,6 @@ const EnterParking = (props: IProps) => {
 
     const handleVehicleEntry = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(vehicleNumber, vehicleType);
-
         let parkingSpotFound: Boolean = false;
         let parkingGarageData = props.parkingGarageData;
         let vehicleAlreadyParked: Boolean = false;
@@ -38,6 +40,10 @@ const EnterParking = (props: IProps) => {
 
         if (vehicleAlreadyParked) {
             //Show error message
+            setErrorMessage(
+                "Vehicle is already parked. Check registration number"
+            );
+            setIsPrintTicket(false);
             console.log("Vehicle is already parked. Check registration number");
             return;
         }
@@ -55,49 +61,59 @@ const EnterParking = (props: IProps) => {
                     parkingSpot.vehicleNumber = vehicleNumber;
                     parkingSpot.startTime = new Date().getTime();
                     parkingSpot.occupied = true;
+
+                    setParkingDetails({
+                        parkingSpot: parkingSpot,
+                        floorNumber: floor.floor_number,
+                    });
                 }
             });
         });
 
         if (parkingSpotFound) {
             props.setParkingGarageData(parkingGarageData);
-            //Print ticket
+            setIsPrintTicket(true);
         } else {
+            setErrorMessage("No parking spots available");
+            setIsPrintTicket(false);
             console.log("No parking spots available");
             //Show error message
         }
     };
 
     return (
-        <form onSubmit={handleVehicleEntry}>
-            <label>
-                Vehicle Number:
-                <input
-                    type="text"
-                    name="vehicleNumber"
-                    onChange={handleVehicleNumber}
-                    value={vehicleNumber}
-                />
-            </label>
-            <label>
-                Vehicle Type:
-                <select onChange={handleVehicleType} value={vehicleType}>
-                    <option value={ParkingSpotType.compact}>
-                        {ParkingSpotType.compact}
-                    </option>
-                    <option value={ParkingSpotType.large}>
-                        {ParkingSpotType.large}
-                    </option>
-                    <option selected value={ParkingSpotType.motorcycle}>
-                        {ParkingSpotType.motorcycle}
-                    </option>
-                    <option value={ParkingSpotType.handicapped}>
-                        {ParkingSpotType.handicapped}
-                    </option>
-                </select>
-            </label>
-            <input type="submit" value="Enter" />
-        </form>
+        <>
+            <form onSubmit={handleVehicleEntry}>
+                <label>
+                    Vehicle Number:
+                    <input
+                        type="text"
+                        name="vehicleNumber"
+                        onChange={handleVehicleNumber}
+                        value={vehicleNumber}
+                    />
+                </label>
+                <label>
+                    Vehicle Type:
+                    <select onChange={handleVehicleType} value={vehicleType}>
+                        <option value={ParkingSpotType.compact}>
+                            {ParkingSpotType.compact}
+                        </option>
+                        <option value={ParkingSpotType.large}>
+                            {ParkingSpotType.large}
+                        </option>
+                        <option selected value={ParkingSpotType.motorcycle}>
+                            {ParkingSpotType.motorcycle}
+                        </option>
+                        <option value={ParkingSpotType.handicapped}>
+                            {ParkingSpotType.handicapped}
+                        </option>
+                    </select>
+                </label>
+                <input type="submit" value="Enter" />
+            </form>
+            {isPrintTicket && <ParkingTicket parkingDetails={parkingDetails} />}
+        </>
     );
 };
 
