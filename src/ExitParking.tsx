@@ -16,7 +16,6 @@ const ExitParking = (props: any) => {
 
         let parkingGarageData = props.parkingGarageData;
         let vehicleFound: Boolean = false;
-        let totalParkingTimeInHours: any = null;
 
         //Find the vehicle parking spot
         parkingGarageData.floors.forEach((floor: Floor) => {

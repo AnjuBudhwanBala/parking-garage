@@ -83,7 +83,7 @@ const EnterParking = (props: IProps) => {
 
     return (
         <>
-            <form onSubmit={handleVehicleEntry}>
+            <form onSubmit={handleVehicleEntry} className="parkingForm">
                 <label>
                     Vehicle Number:
                     <input
@@ -96,18 +96,9 @@ const EnterParking = (props: IProps) => {
                 <label>
                     Vehicle Type:
                     <select onChange={handleVehicleType} value={vehicleType}>
-                        <option value={ParkingSpotType.compact}>
-                            {ParkingSpotType.compact}
-                        </option>
-                        <option value={ParkingSpotType.large}>
-                            {ParkingSpotType.large}
-                        </option>
-                        <option selected value={ParkingSpotType.motorcycle}>
-                            {ParkingSpotType.motorcycle}
-                        </option>
-                        <option value={ParkingSpotType.handicapped}>
-                            {ParkingSpotType.handicapped}
-                        </option>
+                        {Object.keys(ParkingSpotType).map((spotType) => {
+                            return <option value={spotType}>{spotType}</option>;
+                        })}
                     </select>
                 </label>
                 <input type="submit" value="Enter" />
