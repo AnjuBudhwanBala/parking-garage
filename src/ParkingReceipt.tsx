@@ -68,13 +68,32 @@ const ParkingReceipt = (props: any) => {
     const totalCost = calculatePrice(parkingTimeInHours);
     return (
         <div className="parkingTicket">
-            <p>Parking spot id: {parkingDetails.parkingSpot.id}</p>
-            <p>Floor number: {parkingDetails.floorNumber}</p>
-            <p>Vehicle Number: {parkingDetails.vehicleNumber}</p>
-            <p>Start time: {formatTime(startTime)}</p>
-            <p>End time: {formatTime(endTime)}</p>
-            <p>Parking time: {convertHoursToTime(parkingTimeInHours)}</p>
-            <p>Total cost: NOK {totalCost}</p>
+            <p>
+                <strong>Your parking receipt is here</strong>
+            </p>
+            <p>
+                Parking spot id:{" "}
+                <strong>{parkingDetails.parkingSpot.id}</strong>
+            </p>
+            <p>
+                Floor number: <strong> {parkingDetails.floorNumber}</strong>
+            </p>
+            <p>
+                Vehicle Number: <strong>{parkingDetails.vehicleNumber}</strong>
+            </p>
+            <p>
+                Start time: <strong>{formatTime(startTime)}</strong>
+            </p>
+            <p>
+                End time: <strong> {formatTime(endTime)}</strong>
+            </p>
+            <p>
+                Parking time:{" "}
+                <strong>{convertHoursToTime(parkingTimeInHours)}</strong>
+            </p>
+            <p>
+                Total cost: <strong> NOK {totalCost}</strong>
+            </p>
         </div>
     );
 };
