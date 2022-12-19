@@ -3,7 +3,7 @@ import { ParkingSpotType, ParkingSpot, Floor, ParkingGarage } from "../App";
 import ParkingTicket from "../ParkingTicket";
 
 type IProps = {
-    setParkingGarageData: (v: ParkingGarage) => void;
+    setParkingGarageData: any;
     parkingGarageData?: ParkingGarage;
 };
 
@@ -24,6 +24,7 @@ const EnterParking = (props: IProps) => {
 
     const handleVehicleEntry = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setErrorMessage("");
         let parkingSpotFound: Boolean = false;
         let parkingGarageData = props.parkingGarageData;
         let vehicleAlreadyParked: Boolean = false;
@@ -32,7 +33,10 @@ const EnterParking = (props: IProps) => {
         parkingGarageData &&
             parkingGarageData.floors.map((floor: Floor) => {
                 return floor.parkingSpots.map((parkingSpot: ParkingSpot) => {
-                    if (parkingSpot.vehicleNumber === vehicleNumber) {
+                    if (
+                        parkingSpot.vehicleNumber === vehicleNumber &&
+                        vehicleNumber !== ""
+                    ) {
                         vehicleAlreadyParked = true;
                     }
                     return vehicleAlreadyParked;
@@ -71,10 +75,17 @@ const EnterParking = (props: IProps) => {
                 });
             });
 
-        if (parkingSpotFound && parkingGarageData) {
-            props.setParkingGarageData(parkingGarageData);
+        if (parkingSpotFound && parkingGarageData && vehicleNumber) {
+            props.setParkingGarageData((prevState: ParkingGarage) => {
+                return {
+                    ...prevState,
+                    parkingGarageData,
+                };
+            });
             setIsPrintTicket(true);
             setErrorMessage("");
+        } else if (vehicleNumber === "") {
+            setErrorMessage("Enter vehicle number");
         } else {
             //Show error message
             setErrorMessage("No parking spots available");
