@@ -98,6 +98,39 @@
                     "startTime": null
                 }
             ]
+        },
+        {
+            "floor_number": 3,
+            "parkingSpots": [
+                {
+                    "id": "0",
+                    "type": "compact",
+                    "occupied": false,
+                    "vehicleNumber": null,
+                    "startTime": null
+                },
+                {
+                    "id": "1",
+                    "type": "large",
+                    "occupied": false,
+                    "vehicleNumber": null,
+                    "startTime": null
+                },
+                {
+                    "id": "2",
+                    "type": "handicapped",
+                    "occupied": false,
+                    "vehicleNumber": null,
+                    "startTime": null
+                },
+                {
+                    "id": "3",
+                    "type": "motorcycle",
+                    "occupied": false,
+                    "vehicleNumber": null,
+                    "startTime": null
+                }
+            ]
         }
     ]
 }
