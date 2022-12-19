@@ -121,7 +121,7 @@
     border: 1px solid black;
 }
 .floorTable {
-    width: 36%;
+    width: 14%;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -130,7 +130,7 @@
     border: 1px solid black;
     list-style: none;
     padding: 0;
-    width: 40rem;
+    width: 15rem;
 }
 .floorTable li {
     border-bottom: 1px solid black;
@@ -141,7 +141,4 @@
 }
 .floorTable li span:first-child {
     width: 10rem;
-}
-.floorTable li span:last-child {
-    width: 26rem;
 }
