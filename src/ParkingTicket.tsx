@@ -1,5 +1,4 @@
-import React from "react";
-import { ParkingSpot, ParkingSpotType } from "./App";
+import { ParkingSpot } from "./App";
 
 type IProps = {
     parkingDetails: {
@@ -8,7 +7,7 @@ type IProps = {
     };
 };
 
-const ParkingTicket = (props: any) => {
+const ParkingTicket = (props: IProps) => {
     const { parkingDetails } = props;
 
     return (

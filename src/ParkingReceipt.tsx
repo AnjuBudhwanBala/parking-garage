@@ -1,10 +1,11 @@
-import React from "react";
-import { ParkingSpot, ParkingSpotType } from "./App";
+import { ParkingSpot } from "./App";
 
 type IProps = {
     parkingDetails: {
         parkingSpot: ParkingSpot;
         floorNumber: number;
+        startTime: number;
+        vehicleNumber: string;
     };
 };
 
@@ -59,7 +60,7 @@ const convertHoursToTime = (hours: number) => {
     return formattedTime;
 };
 
-const ParkingReceipt = (props: any) => {
+const ParkingReceipt = (props: IProps) => {
     const { parkingDetails } = props;
 
     const startTime = parkingDetails.startTime;
