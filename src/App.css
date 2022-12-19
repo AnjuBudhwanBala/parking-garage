@@ -120,3 +120,28 @@
     text-align: center;
     border: 1px solid black;
 }
+.floorTable {
+    width: 36%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.floorTable ul {
+    border: 1px solid black;
+    list-style: none;
+    padding: 0;
+    width: 40rem;
+}
+.floorTable li {
+    border-bottom: 1px solid black;
+    padding: 1rem 0;
+}
+.floorTable li span {
+    display: inline-flex;
+}
+.floorTable li span:first-child {
+    width: 10rem;
+}
+.floorTable li span:last-child {
+    width: 26rem;
+}
