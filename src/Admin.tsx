@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./App.css";
 
 type IProps = {
-    parkingGarageData: ParkingGarage;
+    parkingGarageData?: ParkingGarage;
 };
 
 const Admin = (props: IProps) => {
@@ -41,7 +41,8 @@ const Admin = (props: IProps) => {
                 </p>
             </div>
             <div className="floor">
-                {parkingGarageData.floors &&
+                {parkingGarageData &&
+                    parkingGarageData.floors &&
                     parkingGarageData.floors.map(
                         (floor: Floor, index: number) => {
                             let floorAvailableParkingSpots = 0;

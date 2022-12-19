@@ -12,7 +12,7 @@ const ParkingTicket = (props: any) => {
     const { parkingDetails } = props;
 
     return (
-        <div>
+        <div className="parkingTicket">
             <p>Parking spot id: {parkingDetails.parkingSpot.id}</p>
             <p>Floor number: {parkingDetails.floorNumber}</p>
             <p>Vehicle Number: {parkingDetails.parkingSpot.vehicleNumber}</p>

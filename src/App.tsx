@@ -30,7 +30,7 @@ export interface ParkingGarage {
 }
 
 function App() {
-    const [parkingGarageData, setParkingGarageData] = useState<any>([]);
+    const [parkingGarageData, setParkingGarageData] = useState<ParkingGarage>();
     const getData = () => {
         fetch("parking-garage.json", {
             headers: {

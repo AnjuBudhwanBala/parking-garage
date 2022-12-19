@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { ParkingSpotType, ParkingSpot, Floor } from "../App";
+import { ParkingSpotType, ParkingSpot, Floor, ParkingGarage } from "../App";
 import ParkingTicket from "../ParkingTicket";
 
 type IProps = {
-    setParkingGarageData: any;
-    parkingGarageData: any;
+    setParkingGarageData: (v: ParkingGarage) => void;
+    parkingGarageData?: ParkingGarage;
 };
 
 const EnterParking = (props: IProps) => {
@@ -29,14 +29,15 @@ const EnterParking = (props: IProps) => {
         let vehicleAlreadyParked: Boolean = false;
 
         //1. Check if vehicle id is already parked
-        parkingGarageData.floors.map((floor: Floor) => {
-            return floor.parkingSpots.map((parkingSpot: ParkingSpot) => {
-                if (parkingSpot.vehicleNumber === vehicleNumber) {
-                    vehicleAlreadyParked = true;
-                }
-                return vehicleAlreadyParked;
+        parkingGarageData &&
+            parkingGarageData.floors.map((floor: Floor) => {
+                return floor.parkingSpots.map((parkingSpot: ParkingSpot) => {
+                    if (parkingSpot.vehicleNumber === vehicleNumber) {
+                        vehicleAlreadyParked = true;
+                    }
+                    return vehicleAlreadyParked;
+                });
             });
-        });
 
         if (vehicleAlreadyParked) {
             //Show error message
@@ -44,66 +45,79 @@ const EnterParking = (props: IProps) => {
                 "Vehicle is already parked. Check registration number"
             );
             setIsPrintTicket(false);
-            console.log("Vehicle is already parked. Check registration number");
             return;
         }
 
         //Find the first free spot
-        parkingGarageData.floors.forEach((floor: Floor) => {
-            floor.parkingSpots.forEach((parkingSpot: ParkingSpot) => {
-                if (
-                    parkingSpot.type === vehicleType &&
-                    parkingSpot.occupied === false &&
-                    parkingSpotFound === false
-                ) {
-                    //Assign the parking spot
-                    parkingSpotFound = true;
-                    parkingSpot.vehicleNumber = vehicleNumber;
-                    parkingSpot.startTime = new Date().getTime();
-                    parkingSpot.occupied = true;
+        parkingGarageData &&
+            parkingGarageData.floors.forEach((floor: Floor) => {
+                floor.parkingSpots.forEach((parkingSpot: ParkingSpot) => {
+                    if (
+                        parkingSpot.type === vehicleType &&
+                        parkingSpot.occupied === false &&
+                        parkingSpotFound === false
+                    ) {
+                        //Assign the parking spot
+                        parkingSpotFound = true;
+                        parkingSpot.vehicleNumber = vehicleNumber;
+                        parkingSpot.startTime = new Date().getTime();
+                        parkingSpot.occupied = true;
 
-                    setParkingDetails({
-                        parkingSpot: parkingSpot,
-                        floorNumber: floor.floor_number,
-                    });
-                }
+                        setParkingDetails({
+                            parkingSpot: parkingSpot,
+                            floorNumber: floor.floor_number,
+                        });
+                    }
+                });
             });
-        });
 
-        if (parkingSpotFound) {
+        if (parkingSpotFound && parkingGarageData) {
             props.setParkingGarageData(parkingGarageData);
             setIsPrintTicket(true);
+            setErrorMessage("");
         } else {
+            //Show error message
             setErrorMessage("No parking spots available");
             setIsPrintTicket(false);
-            console.log("No parking spots available");
-            //Show error message
         }
     };
 
     return (
         <>
-            <form onSubmit={handleVehicleEntry} className="parkingForm">
-                <label>
-                    Vehicle Number:
-                    <input
-                        type="text"
-                        name="vehicleNumber"
-                        onChange={handleVehicleNumber}
-                        value={vehicleNumber}
-                    />
-                </label>
-                <label>
-                    Vehicle Type:
-                    <select onChange={handleVehicleType} value={vehicleType}>
-                        {Object.keys(ParkingSpotType).map((spotType) => {
-                            return <option value={spotType}>{spotType}</option>;
-                        })}
-                    </select>
-                </label>
-                <input type="submit" value="Enter" />
-            </form>
-            {isPrintTicket && <ParkingTicket parkingDetails={parkingDetails} />}
+            <div className="parkingForm">
+                <form onSubmit={handleVehicleEntry}>
+                    <label>
+                        <span>Vehicle Number:</span>
+                        <input
+                            type="text"
+                            name="vehicleNumber"
+                            onChange={handleVehicleNumber}
+                            value={vehicleNumber}
+                        />
+                    </label>
+                    <label>
+                        <span>Vehicle Type:</span>
+                        <select
+                            onChange={handleVehicleType}
+                            value={vehicleType}
+                        >
+                            {Object.keys(ParkingSpotType).map((spotType) => {
+                                return (
+                                    <option value={spotType} key={spotType}>
+                                        {spotType}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                    </label>
+
+                    <input type="submit" value="Enter" className="submit" />
+                </form>
+                {errorMessage && <p className="error">{errorMessage}</p>}
+                {isPrintTicket && (
+                    <ParkingTicket parkingDetails={parkingDetails} />
+                )}
+            </div>
         </>
     );
 };

@@ -1,11 +1,17 @@
 import { useState } from "react";
-import { ParkingSpot, Floor } from "./App";
+import { ParkingSpot, Floor, ParkingGarage } from "./App";
 import ParkingReceipt from "./ParkingReceipt";
 
-const ExitParking = (props: any) => {
+type IProps = {
+    setParkingGarageData: (v: ParkingGarage) => void;
+    parkingGarageData?: ParkingGarage;
+};
+
+const ExitParking = (props: IProps) => {
     const [vehicleNumber, setVehicleNumber] = useState("");
     const [isPrintReceipt, setIsPrintReceipt] = useState(false);
-    const [parkingDetails, setParkingDetails] = useState<any>();
+    const [parkingDetails, setParkingDetails] = useState({});
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleVehicleNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
         setVehicleNumber(e.target.value);
@@ -14,48 +20,49 @@ const ExitParking = (props: any) => {
     const handleVehicleExit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        let parkingGarageData = props.parkingGarageData;
+        const parkingGarageData = props.parkingGarageData;
         let vehicleFound: Boolean = false;
 
         //Find the vehicle parking spot
-        parkingGarageData.floors.forEach((floor: Floor) => {
-            floor.parkingSpots.forEach((parkingSpot: any) => {
-                if (
-                    parkingSpot.vehicleNumber === vehicleNumber &&
-                    !vehicleFound
-                ) {
-                    vehicleFound = true;
+        parkingGarageData &&
+            parkingGarageData.floors.forEach((floor: Floor) => {
+                floor.parkingSpots.forEach((parkingSpot: ParkingSpot) => {
+                    if (
+                        parkingSpot.vehicleNumber === vehicleNumber &&
+                        !vehicleFound
+                    ) {
+                        vehicleFound = true;
 
-                    //Print receipt
-                    setParkingDetails({
-                        parkingSpot: parkingSpot,
-                        vehicleNumber: parkingSpot.vehicleNumber,
-                        startTime: parkingSpot.startTime,
-                        floorNumber: floor.floor_number,
-                    });
+                        //Print receipt
+                        setParkingDetails({
+                            parkingSpot: parkingSpot,
+                            vehicleNumber: parkingSpot.vehicleNumber,
+                            startTime: parkingSpot.startTime,
+                            floorNumber: floor.floor_number,
+                        });
 
-                    //Free up the parking spot
-                    parkingSpot.vehicleNumber = null;
-                    parkingSpot.startTime = null;
-                    parkingSpot.occupied = false;
-                }
+                        //Free up the parking spot
+                        parkingSpot.vehicleNumber = "";
+                        parkingSpot.startTime = 0;
+                        parkingSpot.occupied = false;
+                    }
+                });
             });
-        });
 
-        if (vehicleFound) {
+        if (vehicleFound && parkingGarageData) {
             props.setParkingGarageData(parkingGarageData);
             setIsPrintReceipt(true);
         } else {
-            console.log("No vehicle found. Can't generate a ticket");
+            setErrorMessage("No vehicle found. Can't generate a ticket");
             setIsPrintReceipt(false);
         }
     };
 
     return (
-        <>
+        <div className="parkingForm">
             <form onSubmit={handleVehicleExit}>
                 <label>
-                    Vehicle Number:
+                    <span>Vehicle Number:</span>
                     <input
                         type="text"
                         name="vehicleNumber"
@@ -63,12 +70,14 @@ const ExitParking = (props: any) => {
                         value={vehicleNumber}
                     />
                 </label>
-                <input type="submit" value="Exit" />
+
+                <input type="submit" value="Exit" className="submit" />
             </form>
+            {errorMessage && <p className="error">{errorMessage}</p>}
             {isPrintReceipt && (
                 <ParkingReceipt parkingDetails={parkingDetails} />
             )}
-        </>
+        </div>
     );
 };
 

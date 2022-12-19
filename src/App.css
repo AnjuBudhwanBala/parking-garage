@@ -18,13 +18,15 @@
     justify-content: right;
     margin: 4rem 3rem;
 }
-.adminButton button {
+.adminButton button,
+.submit {
     padding: 1rem 5rem;
     background-color: white;
     color: black;
     border: 2px solid #555555;
 }
-.adminButton button:hover {
+.adminButton button:hover,
+.submit:hover {
     background-color: #555555;
     color: white;
     cursor: pointer;
@@ -58,4 +60,63 @@
 }
 .slotsNumber {
     padding-left: 0.5rem;
+}
+.parkingForm {
+    display: inline-block;
+    vertical-align: top;
+    width: 44%;
+    text-align: center;
+    margin: auto;
+}
+.parkingForm form {
+    margin: 2rem 2.5rem;
+    background: #ddd;
+    padding: 2rem 4rem;
+    height: 15rem;
+}
+.parkingForm label {
+    display: block;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+.parkingForm span {
+    margin: 1rem 0;
+    margin-right: 10px;
+    width: 8rem;
+    display: inline-block;
+}
+
+.parkingForm label input {
+    width: 17rem;
+    height: 2rem;
+    padding: 0.3rem;
+}
+.parkingForm label select {
+    width: 18rem;
+    height: 3rem;
+    padding: 0.1rem;
+}
+.submit {
+    padding: 1rem 4rem;
+}
+.submit input {
+    background: transparent;
+    border: none;
+    color: black;
+}
+.submit input:hover,
+.submit:hover input {
+    color: white;
+    cursor: pointer;
+}
+.error {
+    color: red;
+    font-weight: bold;
+}
+.parkingTicket {
+    background: #ddd;
+    text-align: left;
+    padding: 3rem 2rem;
+    text-align: center;
+    border: 1px solid black;
 }

@@ -67,7 +67,7 @@ const ParkingReceipt = (props: any) => {
     const parkingTimeInHours = (endTime - startTime) / (1000 * 60 * 60);
     const totalCost = calculatePrice(parkingTimeInHours);
     return (
-        <div>
+        <div className="parkingTicket">
             <p>Parking spot id: {parkingDetails.parkingSpot.id}</p>
             <p>Floor number: {parkingDetails.floorNumber}</p>
             <p>Vehicle Number: {parkingDetails.vehicleNumber}</p>

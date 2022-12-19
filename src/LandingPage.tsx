@@ -6,7 +6,7 @@ import "./App.css";
 
 type IProps = {
     setParkingGarageData: (v: ParkingGarage) => void;
-    parkingGarageData: ParkingGarage;
+    parkingGarageData?: ParkingGarage;
 };
 
 const LandingPage = (props: IProps) => {
