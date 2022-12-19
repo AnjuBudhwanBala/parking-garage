@@ -42,3 +42,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 -   Add more features to admin module
     -   Add/Remove floors
     -   Add/Remove parking spots
+    -   Calculate total earnings
