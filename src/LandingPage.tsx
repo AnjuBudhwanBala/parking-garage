@@ -2,6 +2,7 @@ import EnterParking from "./EnterParking/EnterParking";
 import ExitParking from "./ExitParking";
 import { ParkingGarage } from "./App";
 import { useNavigate } from "react-router-dom";
+import FloorParkingSpotTable from "./FloorParkingSpotTable";
 import "./App.css";
 
 type IProps = {
@@ -12,12 +13,13 @@ type IProps = {
 const LandingPage = (props: IProps) => {
     const { setParkingGarageData, parkingGarageData } = props;
     const navigate = useNavigate();
+
     return (
         <>
             <div className="adminButton">
                 <button onClick={(_) => navigate("/admin")}>Admin</button>
             </div>
-
+            <FloorParkingSpotTable parkingGarageData={parkingGarageData} />
             <EnterParking
                 setParkingGarageData={setParkingGarageData}
                 parkingGarageData={parkingGarageData}
