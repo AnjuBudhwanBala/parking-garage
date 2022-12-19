@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import ParkingSpots from "./ParkingSpots/ParkingSpots";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Admin from "./Admin";
 import LandingPage from "./LandingPage";
@@ -70,8 +69,6 @@ function App() {
                     />
                 </Routes>
             </BrowserRouter>
-
-            {/* <ParkingSpots parkingGarageData={parkingGarageData} /> */}
         </div>
     );
 }
