@@ -3,7 +3,7 @@ import { ParkingSpot, Floor, ParkingGarage } from "./App";
 import ParkingReceipt from "./ParkingReceipt";
 
 type IProps = {
-    setParkingGarageData: (v: ParkingGarage) => void;
+    setParkingGarageData: any;
     parkingGarageData?: ParkingGarage;
 };
 
@@ -19,7 +19,7 @@ const ExitParking = (props: IProps) => {
 
     const handleVehicleExit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        setErrorMessage("");
         const parkingGarageData = props.parkingGarageData;
         let vehicleFound: Boolean = false;
 
@@ -50,7 +50,12 @@ const ExitParking = (props: IProps) => {
             });
 
         if (vehicleFound && parkingGarageData) {
-            props.setParkingGarageData(parkingGarageData);
+            props.setParkingGarageData((prevState: ParkingGarage) => {
+                return {
+                    ...prevState,
+                    parkingGarageData,
+                };
+            });
             setIsPrintReceipt(true);
         } else {
             setErrorMessage("No vehicle found. Can't generate a ticket");
