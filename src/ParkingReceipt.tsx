@@ -60,7 +60,7 @@ const convertHoursToTime = (hours: number) => {
     return formattedTime;
 };
 
-const ParkingReceipt = (props: IProps) => {
+const ParkingReceipt = (props: any) => {
     const { parkingDetails } = props;
 
     const startTime = parkingDetails.startTime;
