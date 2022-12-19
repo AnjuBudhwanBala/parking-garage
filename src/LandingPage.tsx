@@ -1,9 +1,9 @@
 import { useState } from "react";
-import EnterParking from "./EnterParking/EnterParking";
-import ExitParking from "./ExitParking";
-import { ParkingGarage } from "./App";
 import { useNavigate } from "react-router-dom";
-import FloorParkingSpotTable from "./FloorParkingSpotTable";
+import EnterParking from "./Parking/EnterParking";
+import ExitParking from "./Parking/ExitParking";
+import { ParkingGarage } from "./App";
+import FloorParkingSpotTable from "./Parking/FloorParkingSpotTable";
 import "./App.css";
 
 type IProps = {

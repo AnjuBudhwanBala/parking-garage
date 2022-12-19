@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ParkingSpotType, ParkingSpot, Floor, ParkingGarage } from "../App";
-import ParkingTicket from "../ParkingTicket";
+import ParkingTicket from "./ParkingTicket";
 
 type IProps = {
     setParkingGarageData: any;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ParkingSpot, Floor, ParkingGarage } from "./App";
+import { ParkingSpot, Floor, ParkingGarage } from "../App";
 import ParkingReceipt from "./ParkingReceipt";
 
 type IProps = {

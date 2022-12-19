@@ -1,4 +1,4 @@
-import { ParkingSpot } from "./App";
+import { ParkingSpot } from "../App";
 
 type IProps = {
     parkingDetails: {

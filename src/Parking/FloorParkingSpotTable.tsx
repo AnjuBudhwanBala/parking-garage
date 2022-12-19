@@ -1,5 +1,5 @@
-import { Floor, ParkingSpot, ParkingGarage } from "./App";
-import "./App.css";
+import { Floor, ParkingSpot, ParkingGarage } from "../App";
+import "../App.css";
 
 type Props = {
     parkingGarageData?: ParkingGarage;
