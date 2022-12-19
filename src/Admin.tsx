@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ParkingGarage, Floor, ParkingSpot } from "./App";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
@@ -9,17 +9,94 @@ type IProps = {
 
 const Admin = (props: IProps) => {
     const { parkingGarageData } = props;
+    const [totalAvailable, setTotalAvailable] = useState(0);
+    const [totalOccupied, setTotalOccupied] = useState(0);
     const navigate = useNavigate();
-    const [
-        totalAvailableParkingSpotsOfGarage,
-        setTotalAvailableParkingSpotsOfGarage,
-    ] = useState(0);
-    const [
-        totalOccupiedParkingSpotsOfGarage,
-        setTotalOccupiedParkingSpotsOfGarage,
-    ] = useState(0);
-    let totalAvailableParkingSpots = 0;
-    let totalOccupiedParkingSpots = 0;
+
+    useEffect(() => {
+        let totalAvailableParkingSpots = 0;
+        let totalOccupiedParkingSpots = 0;
+        parkingGarageData &&
+            parkingGarageData.floors &&
+            parkingGarageData.floors.map((floor: Floor, index: number) => {
+                floor.parkingSpots.map(
+                    (parkingSpot: ParkingSpot, index: number) => {
+                        if (parkingSpot.occupied) {
+                            totalOccupiedParkingSpots += 1;
+                        } else {
+                            totalAvailableParkingSpots += 1;
+                        }
+                    }
+                );
+            });
+        setTotalAvailable(totalAvailableParkingSpots);
+        setTotalOccupied(totalOccupiedParkingSpots);
+    }, [parkingGarageData]);
+
+    const renderData = useCallback(() => {
+        return (
+            parkingGarageData &&
+            parkingGarageData.floors &&
+            parkingGarageData.floors.map((floor: Floor, index: number) => {
+                let floorAvailableParkingSpots = 0;
+                let floorOccupiedParkingSpots = 0;
+                return (
+                    <>
+                        <div className="floorItems" key={index}>
+                            <div className="floorNumber">
+                                <strong>Floor: </strong>
+                                {floor.floor_number}
+                            </div>
+
+                            <div className="floorSpots">
+                                {floor.parkingSpots.map(
+                                    (
+                                        parkingSpot: ParkingSpot,
+                                        index: number
+                                    ) => {
+                                        if (parkingSpot.occupied === false) {
+                                            floorAvailableParkingSpots += 1;
+                                        } else {
+                                            floorOccupiedParkingSpots += 1;
+                                        }
+
+                                        return (
+                                            <div
+                                                key={index}
+                                                className={
+                                                    parkingSpot.occupied
+                                                        ? "red"
+                                                        : "green"
+                                                }
+                                            >
+                                                {parkingSpot.id}
+                                            </div>
+                                        );
+                                    }
+                                )}
+                            </div>
+                            <p>
+                                Available Slots on floor:
+                                <span className="slotsNumber">
+                                    <strong>
+                                        {floorAvailableParkingSpots}
+                                    </strong>
+                                </span>
+                            </p>
+                            <p>
+                                Occupied Slots on floor:
+                                <span className="slotsNumber">
+                                    <strong>
+                                        {floorOccupiedParkingSpots}{" "}
+                                    </strong>
+                                </span>
+                            </p>
+                        </div>
+                    </>
+                );
+            })
+        );
+    }, [parkingGarageData]);
 
     return (
         <>
@@ -27,86 +104,21 @@ const Admin = (props: IProps) => {
                 <button onClick={(_) => navigate("/")}>Back</button>
             </div>
             <div>
-                <p>
-                    Total Available Slots:
-                    <span className="slotsNumber">
-                        <strong>{totalAvailableParkingSpotsOfGarage}</strong>
-                    </span>
-                </p>
-                <p>
-                    Total Occupied Slots:
-                    <span className="slotsNumber">
-                        <strong>{totalOccupiedParkingSpots}</strong>
-                    </span>
-                </p>
-            </div>
-            <div className="floor">
-                {parkingGarageData &&
-                    parkingGarageData.floors &&
-                    parkingGarageData.floors.map(
-                        (floor: Floor, index: number) => {
-                            let floorAvailableParkingSpots = 0;
-                            let floorOccupiedParkingSpots = 0;
-                            return (
-                                <div className="floorItems" key={index}>
-                                    <div className="floorNumber">
-                                        <strong>Floor: </strong>
-                                        {floor.floor_number}
-                                    </div>
-
-                                    <div className="floorSpots">
-                                        {floor.parkingSpots.map(
-                                            (
-                                                parkingSpot: ParkingSpot,
-                                                index: number
-                                            ) => {
-                                                if (
-                                                    parkingSpot.occupied ===
-                                                    false
-                                                ) {
-                                                    floorAvailableParkingSpots += 1;
-                                                    totalAvailableParkingSpots += 1;
-                                                } else {
-                                                    floorOccupiedParkingSpots += 1;
-                                                    totalOccupiedParkingSpots =
-                                                        +1;
-                                                }
-
-                                                return (
-                                                    <div
-                                                        key={index}
-                                                        className={
-                                                            parkingSpot.occupied
-                                                                ? "red"
-                                                                : "green"
-                                                        }
-                                                    >
-                                                        {parkingSpot.id}
-                                                    </div>
-                                                );
-                                            }
-                                        )}
-                                    </div>
-                                    <p>
-                                        Available Slots on floor:
-                                        <span className="slotsNumber">
-                                            <strong>
-                                                {floorAvailableParkingSpots}
-                                            </strong>
-                                        </span>
-                                    </p>
-                                    <p>
-                                        Occupied Slots on floor:
-                                        <span className="slotsNumber">
-                                            <strong>
-                                                {floorOccupiedParkingSpots}{" "}
-                                            </strong>
-                                        </span>
-                                    </p>
-                                </div>
-                            );
-                        }
-                    )}
+                <div>
+                    <p>
+                        Total Available Slots:
+                        <span className="slotsNumber">
+                            <strong>{totalAvailable}</strong>
+                        </span>
+                    </p>
+                    <p>
+                        Total Occupied Slots:
+                        <span className="slotsNumber">
+                            <strong>{totalOccupied}</strong>
+                        </span>
+                    </p>
+                </div>
+                <div className="floor">{renderData()}</div>
             </div>
         </>
     );
