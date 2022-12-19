@@ -5,13 +5,15 @@ import ParkingTicket from "../ParkingTicket";
 type IProps = {
     setParkingGarageData: any;
     parkingGarageData?: ParkingGarage;
+    isPrintTicket: Boolean;
+    setIsPrintTicket: (v: boolean) => void;
+    setIsPrintReceipt: (v: boolean) => void;
 };
 
 const EnterParking = (props: IProps) => {
     const [vehicleNumber, setVehicleNumber] = useState("");
     const [vehicleType, setVehicleType] = useState("compact");
     const [errorMessage, setErrorMessage] = useState("");
-    const [isPrintTicket, setIsPrintTicket] = useState(false);
     const [parkingDetails, setParkingDetails] = useState<any>();
 
     const handleVehicleNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +25,7 @@ const EnterParking = (props: IProps) => {
     };
 
     const handleVehicleEntry = (e: React.FormEvent<HTMLFormElement>) => {
+        props.setIsPrintReceipt(false);
         e.preventDefault();
         setErrorMessage("");
         let parkingSpotFound: Boolean = false;
@@ -48,7 +51,7 @@ const EnterParking = (props: IProps) => {
             setErrorMessage(
                 "Vehicle is already parked. Check registration number"
             );
-            setIsPrintTicket(false);
+            props.setIsPrintTicket(false);
             return;
         }
 
@@ -82,14 +85,14 @@ const EnterParking = (props: IProps) => {
                     parkingGarageData,
                 };
             });
-            setIsPrintTicket(true);
+            props.setIsPrintTicket(true);
             setErrorMessage("");
         } else if (vehicleNumber === "") {
             setErrorMessage("Enter vehicle number");
         } else {
             //Show error message
             setErrorMessage("No parking spots available");
-            setIsPrintTicket(false);
+            props.setIsPrintTicket(false);
         }
     };
 
@@ -125,7 +128,7 @@ const EnterParking = (props: IProps) => {
                     <input type="submit" value="Enter" className="submit" />
                 </form>
                 {errorMessage && <p className="error">{errorMessage}</p>}
-                {isPrintTicket && (
+                {props.isPrintTicket && (
                     <ParkingTicket parkingDetails={parkingDetails} />
                 )}
             </div>

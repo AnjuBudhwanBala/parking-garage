@@ -5,11 +5,13 @@ import ParkingReceipt from "./ParkingReceipt";
 type IProps = {
     setParkingGarageData: any;
     parkingGarageData?: ParkingGarage;
+    isPrintReceipt: boolean;
+    setIsPrintReceipt: (v: boolean) => void;
+    setIsPrintTicket: (v: boolean) => void;
 };
 
 const ExitParking = (props: IProps) => {
     const [vehicleNumber, setVehicleNumber] = useState("");
-    const [isPrintReceipt, setIsPrintReceipt] = useState(false);
     const [parkingDetails, setParkingDetails] = useState({});
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -18,6 +20,7 @@ const ExitParking = (props: IProps) => {
     };
 
     const handleVehicleExit = (e: React.FormEvent<HTMLFormElement>) => {
+        props.setIsPrintTicket(false);
         e.preventDefault();
         setErrorMessage("");
         const parkingGarageData = props.parkingGarageData;
@@ -56,10 +59,10 @@ const ExitParking = (props: IProps) => {
                     parkingGarageData,
                 };
             });
-            setIsPrintReceipt(true);
+            props.setIsPrintReceipt(true);
         } else {
             setErrorMessage("No vehicle found. Can't generate a ticket");
-            setIsPrintReceipt(false);
+            props.setIsPrintReceipt(false);
         }
     };
 
@@ -79,7 +82,7 @@ const ExitParking = (props: IProps) => {
                 <input type="submit" value="Exit" className="submit" />
             </form>
             {errorMessage && <p className="error">{errorMessage}</p>}
-            {isPrintReceipt && (
+            {props.isPrintReceipt && (
                 <ParkingReceipt parkingDetails={parkingDetails} />
             )}
         </div>

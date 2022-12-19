@@ -1,3 +1,4 @@
+import { useState } from "react";
 import EnterParking from "./EnterParking/EnterParking";
 import ExitParking from "./ExitParking";
 import { ParkingGarage } from "./App";
@@ -12,6 +13,8 @@ type IProps = {
 
 const LandingPage = (props: IProps) => {
     const { setParkingGarageData, parkingGarageData } = props;
+    const [isPrintTicket, setIsPrintTicket] = useState(false);
+    const [isPrintReceipt, setIsPrintReceipt] = useState(false);
     const navigate = useNavigate();
 
     return (
@@ -23,10 +26,16 @@ const LandingPage = (props: IProps) => {
             <EnterParking
                 setParkingGarageData={setParkingGarageData}
                 parkingGarageData={parkingGarageData}
+                isPrintTicket={isPrintTicket}
+                setIsPrintTicket={setIsPrintTicket}
+                setIsPrintReceipt={setIsPrintReceipt}
             />
             <ExitParking
                 setParkingGarageData={setParkingGarageData}
                 parkingGarageData={parkingGarageData}
+                isPrintReceipt={isPrintReceipt}
+                setIsPrintReceipt={setIsPrintReceipt}
+                setIsPrintTicket={setIsPrintTicket}
             />
         </>
     );
