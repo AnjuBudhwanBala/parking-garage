@@ -13,19 +13,32 @@ const ParkingTicket = (props: any) => {
 
     return (
         <div className="parkingTicket">
-            <p>Parking spot id: {parkingDetails.parkingSpot.id}</p>
-            <p>Floor number: {parkingDetails.floorNumber}</p>
-            <p>Vehicle Number: {parkingDetails.parkingSpot.vehicleNumber}</p>
             <p>
-                Start time:{" "}
-                {new Intl.DateTimeFormat("nb-NO", {
-                    year: "numeric",
-                    month: "short",
-                    day: "2-digit",
-                    hour: "numeric",
-                    minute: "numeric",
-                    second: "numeric",
-                }).format(parkingDetails.parkingSpot.startTime)}
+                <strong>Your parking ticket is here</strong>
+            </p>
+            <p>
+                Parking spot id:
+                <strong>{parkingDetails.parkingSpot.id}</strong>
+            </p>
+            <p>
+                Floor number: <strong>{parkingDetails.floorNumber}</strong>
+            </p>
+            <p>
+                Vehicle Number:
+                <strong>{parkingDetails.parkingSpot.vehicleNumber}</strong>
+            </p>
+            <p>
+                Start time:
+                <strong>
+                    {new Intl.DateTimeFormat("nb-NO", {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit",
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric",
+                    }).format(parkingDetails.parkingSpot.startTime)}
+                </strong>
             </p>
         </div>
     );
