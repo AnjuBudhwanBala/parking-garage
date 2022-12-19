@@ -25,8 +25,20 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `Class Diagram`
+## Class Diagram
 
-<p align="center">
-  <img src="src/images/class_diagram.jpg" width="350" alt="accessibility text">
-</p>
+![Class diagram](/res/class_diagram.jpg)
+
+### Improvements
+
+-   Add more validations in the form (Enter/Exit parking) such as
+    -   Check for special chars
+    -   Min/Max characters
+-   Complete type definition
+-   Improve code reusability
+-   Improve UI
+-   Use common component for parking ticket/receipt
+-   Add pay module
+-   Add more features to admin module
+    -   Add/Remove floors
+    -   Add/Remove parking spots
