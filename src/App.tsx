@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import ParkingSpots from "./ParkingSpots/ParkingSpots";
-import EnterParking from "./EnterParking/EnterParking";
-import ExitParking from "./ExitParking";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Admin from "./Admin";
+import LandingPage from "./LandingPage";
 import "./App.css";
 
 export enum ParkingSpotType {
@@ -50,15 +51,27 @@ function App() {
 
     return (
         <div className="App">
-            <ParkingSpots floorData={parkingGarageData.floors} />
-            <EnterParking
-                setParkingGarageData={setParkingGarageData}
-                parkingGarageData={parkingGarageData}
-            />
-            <ExitParking
-                setParkingGarageData={setParkingGarageData}
-                parkingGarageData={parkingGarageData}
-            />
+            <BrowserRouter>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <LandingPage
+                                setParkingGarageData={setParkingGarageData}
+                                parkingGarageData={parkingGarageData}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/admin"
+                        element={
+                            <Admin parkingGarageData={parkingGarageData} />
+                        }
+                    />
+                </Routes>
+            </BrowserRouter>
+
+            {/* <ParkingSpots parkingGarageData={parkingGarageData} /> */}
         </div>
     );
 }
